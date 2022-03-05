@@ -1,11 +1,12 @@
 import {
     Auth, getAuth, signInWithEmailAndPassword,
     createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
+    sendPasswordResetEmail
 } from 'firebase/auth'
 import { auth, firestore } from './firebase';
 import {
     setDoc, doc, updateDoc,
-    getFirestore, collection, addDoc
+    getFirestore, collection, addDoc, query, where, getDocs
 } from 'firebase/firestore'
 
 const provider = new GoogleAuthProvider();
@@ -50,9 +51,12 @@ export async function login(email, password) {
     } catch (error) {
         console.log('error:', error)
     }
-
 }
 
+export async function sendResetPassword(email) {
+    await sendPasswordResetEmail(email)
+    return true;
+}
 
 export async function createNewId() {
     // Add a new document with a generated id.
@@ -72,3 +76,15 @@ export async function updateDC() {
     });
 
 }
+
+export async function getCapitalCities() {
+    const q = query(collection(firestore, "cities"), where("capital", "==", true));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+    });
+}
+
+//https://firebase.google.com/docs/firestore/manage-data/add-data

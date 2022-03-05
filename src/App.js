@@ -1,14 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect } from 'react';
-import { createNewId, login, updateDC } from './firebase/createUser';
+import { createNewId, getCapitalCities, login, updateDC } from './firebase/createUser';
 import { update } from 'firebase/database';
 
 function App() {
   useEffect(() => {
     // createNewId()
     // updateDC()
-    login("reut@hilma.tech", "123123");
+    // login("reut@hilma.tech", "123123"); //worng password
+    getCapitalCities()
 
   }, [])
 

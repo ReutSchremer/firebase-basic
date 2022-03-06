@@ -34,14 +34,23 @@ export const googleLogin = () => {
 export async function register(email, password) {
 
     const firestore = getFirestore()
-    firestore && createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
         .then(userCredential => {
             const usersref = collection(firestore, 'users');
             setDoc(doc(usersref, userCredential.user.uid), {
                 name: "NAME",
             })
 
-        })
+        });
+
+    //or
+
+    // const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // const usersref = collection(firestore, 'users');
+    // setDoc(doc(usersref, userCredential.user.uid), {
+    //     name: "NAME",
+    // })
+
 }
 
 export async function login(email, password) {
@@ -77,9 +86,9 @@ export async function updateDC() {
 
 }
 
+
 export async function getCapitalCities() {
     const q = query(collection(firestore, "cities"), where("capital", "==", true));
-
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
@@ -87,4 +96,7 @@ export async function getCapitalCities() {
     });
 }
 
+
 //https://firebase.google.com/docs/firestore/manage-data/add-data
+//https://khreniak.medium.com/cloud-firestore-security-rules-basics-fac6b6bea18e
+//https://firebase.google.com/docs/rules/data-validation

@@ -3,13 +3,14 @@ import './App.css';
 import { useEffect } from 'react';
 import { createNewId, getCapitalCities, login, updateDC } from './firebase/createUser';
 import { update } from 'firebase/database';
+import { initDB } from './firebase/initCities';
 
 function App() {
   useEffect(() => {
     // createNewId()
     // updateDC()
     // login("reut@hilma.tech", "123123"); //worng password
-    getCapitalCities()
+    // getCapitalCities()
 
   }, [])
 
@@ -28,7 +29,9 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={() => initDB()}>Init DB</button>
       </header>
+
     </div>
   );
 }
